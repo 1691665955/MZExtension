@@ -1,24 +1,28 @@
 //
-//  UIImage+TDTool.h
-//  TDEntranceGuard
+//  UIImage+MZTool.h
+//  StudyDemo
 //
-//  Created by 曾龙 on 2018/6/6.
-//  Copyright © 2018年 farbell. All rights reserved.
+//  Created by 曾龙 on 2018/1/11.
+//  Copyright © 2018年 曾龙. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface UIImage (TDTool)
+@interface UIImage (MZTool)
+
+/**
+ 根据颜色生成图片
+ */
++ (UIImage *)getImageWithColor:(UIColor *)color;
 
 /**
  根据字符串和二维码图片大小来生成二维码图片
-
+ 
  @param string 生成二维码的内容
  @param size 二维码图片的大小
  @return 二维码图片
  */
 + (UIImage *)createBarCodeImageWithString:(NSString *)string size:(CGFloat)size;
-
 
 /**
  根据颜色的渐变色获取图片
@@ -33,9 +37,29 @@
 + (UIImage *)createImageWithFrame:(CGRect)frame startColor:(UIColor *)startColor endColor:(UIColor *)endColor startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
 
 /**
- 根据颜色生成图片
+ base64字符串转图片
  */
-+ (UIImage *)getImageWithColor:(UIColor *)color;
++ (UIImage *)stringToImage:(NSString *)base64String;
+
+/**
+ 图片转base64字符串
+ */
+- (NSString *)imageToBase64String;
+
+/**
+ 截取view成图片
+
+ @param view 被截取的view
+ */
++ (UIImage *)clipsImage:(UIView *)view;
+
+/**
+ 对图片进行剪切，获取指定范围的图片
+ 
+ @param image 被截取的图片
+ @param frame 截取的范围
+ */
++ (UIImage *)clipsImage:(UIImage *)image frame:(CGRect)frame;
 
 /**
  重新生成指定大小图片
@@ -44,11 +68,4 @@
  @param size 生成图片的大小
  */
 + (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)size;
-
-/**
- 截取view成图片
- 
- @param view 被截取的view
- */
-+ (UIImage *)clipsImage:(UIView *)view;
 @end

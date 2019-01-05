@@ -1,17 +1,17 @@
 //
-//  UIButton+TDTouch.m
-//  SmartApartment
+//  UIButton+MZTouch.m
+//  StudyDemo
 //
-//  Created by 曾龙 on 2018/7/20.
-//  Copyright © 2018年 trudian. All rights reserved.
+//  Created by 曾龙 on 2018/8/16.
+//  Copyright © 2018年 曾龙. All rights reserved.
 //
 
-#import "UIButton+TDTouch.h"
+#import "UIButton+MZTouch.h"
 #import<objc/runtime.h>
 
-#define defaultInterval  0.5f
+#define defaultInterval  1.0f
 
-@implementation UIButton (TDTouch)
+@implementation UIButton (MZTouch)
 static const char *UIControl_eventTimeInterval = "UIControl_eventTimeInterval";
 - (void)sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
     self.enabled = NO;

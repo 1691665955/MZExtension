@@ -1,14 +1,17 @@
 //
-//  UIView+TDTool.m
-//  TDEntranceGuard
+//  UIView+MZTool.m
+//  StudyDemo
 //
-//  Created by 曾龙 on 2018/6/1.
-//  Copyright © 2018年 farbell. All rights reserved.
+//  Created by 曾龙 on 2018/6/27.
+//  Copyright © 2018年 曾龙. All rights reserved.
 //
 
-#import "UIView+TDTool.h"
+#import "UIView+MZTool.h"
 
-@implementation UIView (TDTool)
+@implementation UIView (MZTool)
+/*
+  设置试图背景颜色的渐变色
+ */
 - (void)setupGradientColorWithStartColor:(UIColor *)startColor endColor:(UIColor *)endColor startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint {
     if (self.layer.sublayers.count > 0 && [self.layer.sublayers[0] isKindOfClass:[CAGradientLayer class]]) {
         [self.layer.sublayers[0] removeFromSuperlayer];
@@ -22,17 +25,11 @@
 }
 
 /**
- 根据一个VC上的view得到该VC
- 
- @return VC
+ 给view添加点击事件
  */
-- (UIViewController *)getVC {
-    UIResponder *responder = self;
-    while ((responder = [responder nextResponder])) {
-        if ([responder isKindOfClass:[UIViewController class]]) {
-            return (UIViewController *)responder;
-        }
-    }
-    return nil;
+- (void)addTapGestureRecognizerWithTarget:(id)target selector:(SEL)selector {
+    self.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:target action:selector];
+    [self addGestureRecognizer:tap];
 }
 @end

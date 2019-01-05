@@ -1,14 +1,14 @@
 //
-//  NSDictionary+TDTool.h
-//  TDEntranceGuard
+//  NSDictionary+MZTool.h
+//  StudyDemo
 //
-//  Created by 曾龙 on 2018/6/8.
-//  Copyright © 2018年 farbell. All rights reserved.
+//  Created by 曾龙 on 2018/6/27.
+//  Copyright © 2018年 曾龙. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface NSDictionary (TDTool)
+@interface NSDictionary (MZTool)
 /**
  从字典中取出一个字典
  
@@ -56,10 +56,4 @@
  @return 关键字存在时返回实际的值，不存在时返回0.00
  */
 - (double)doubleForKey:(NSString *)key;
-
-- (NSString *)RMBForKey:(NSString *)key;
-- (NSString *)RMBCodeForKey:(NSString *)key;
-- (NSString *)dateForKey:(NSString *)key;
-
-- (void)createPropertyCode;
 @end

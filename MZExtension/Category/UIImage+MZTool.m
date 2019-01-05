@@ -1,14 +1,35 @@
 //
-//  UIImage+TDTool.m
-//  TDEntranceGuard
+//  UIImage+MZTool.m
+//  StudyDemo
 //
-//  Created by 曾龙 on 2018/6/6.
-//  Copyright © 2018年 farbell. All rights reserved.
+//  Created by 曾龙 on 2018/1/11.
+//  Copyright © 2018年 曾龙. All rights reserved.
 //
 
-#import "UIImage+TDTool.h"
+#import "UIImage+MZTool.h"
 
-@implementation UIImage (TDTool)
+@implementation UIImage (MZTool)
+
+/**
+ 根据颜色生成图片
+ */
++ (UIImage *)getImageWithColor:(UIColor *)color {
+    CGRect frame = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(frame.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, frame);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+/*
+ 根据字符串和二维码图片大小来生成二维码图片
+ */
 + (UIImage *)createBarCodeImageWithString:(NSString *)string size:(CGFloat)size {
     //创建滤镜对象
     CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
@@ -112,25 +133,59 @@
 }
 
 /**
- 根据颜色生成图片
+ base64字符串转图片
  */
-+ (UIImage *)getImageWithColor:(UIColor *)color {
-    CGRect frame = CGRectMake(0, 0, 1, 1);
-    UIGraphicsBeginImageContext(frame.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, frame);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
++ (UIImage *)stringToImage:(NSString *)base64String {
+    NSData * imageData =[[NSData alloc] initWithBase64EncodedString:base64String options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    UIImage *image = [UIImage imageWithData:imageData];
     return image;
 }
 
 /**
+ 图片转base64字符串
+ */
+- (NSString *)imageToBase64String {
+    NSData *imagedata = UIImagePNGRepresentation(self);
+    NSString *base64String = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return base64String;
+}
+
+/**
+ 截取view成图片
+ */
++ (UIImage *)clipsImage:(UIView *)view {
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [view.layer renderInContext:context];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+/**
+ 对图片进行剪切，获取指定范围的图片
+
+ @param image 被截取的图片
+ @param frame 截取的范围
+ */
++ (UIImage *)clipsImage:(UIImage *)image frame:(CGRect)frame {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat x = frame.origin.x*scale;
+    CGFloat y = frame.origin.y*scale;
+    CGFloat w = frame.size.width*scale;
+    CGFloat h = frame.size.height*scale;
+    CGRect newFrame = CGRectMake(x, y, w, h);
+    
+    CGImageRef sourceImageRef = [image CGImage];
+    CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, newFrame);
+    UIImage *newImage = [UIImage imageWithCGImage:newImageRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+    return newImage;
+}
+
+
+/**
  重新生成指定大小图片
- 
+
  @param image 原图片
  @param size 生成图片的大小
  */
@@ -145,15 +200,4 @@
     return newImage;
 }
 
-/**
- 截取view成图片
- */
-+ (UIImage *)clipsImage:(UIView *)view {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [view.layer renderInContext:context];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
 @end
