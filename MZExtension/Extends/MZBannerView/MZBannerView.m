@@ -7,7 +7,7 @@
 //
 
 #import "MZBannerView.h"
-#import <UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 #define DefaultTimeInterval 4
 
