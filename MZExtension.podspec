@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = 'MZExtension'
-s.version = '1.1.6'
+s.version = '1.1.7'
 s.license = 'MIT'
 s.summary = 'Some categorys and custom objects for iOS.'
 s.homepage = 'https://github.com/1691665955/MZExtension'
@@ -15,11 +15,11 @@ s.subspec 'Base' do |Base|
 end
 
 s.subspec 'Category' do |Category|
-  Base.source_files = 'MZExtension/MZExtension/Category/*.{h,m}'
+  Category.source_files = 'MZExtension/MZExtension/Category/*.{h,m}'
 end
 
 s.subspec 'Extends' do |Extends|
-  Base.source_files = 'MZExtension/MZExtension/Extends/*.{h,m}'
+  Extends.source_files = 'MZExtension/MZExtension/Extends/*.{h,m}'
 end
 
 end
