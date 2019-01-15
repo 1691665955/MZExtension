@@ -138,3 +138,8 @@ A extension for OC
 
 1.通过eventTimeInterval来设置UIButton点击间隔
 
+10、NSArray+MZTool
+
+1.获取数组中的最大值数组
+- (void)caculateMaxArray:(void(^)(NSArray *maxArray,NSInteger startIndex,NSInteger endIndex))callback;
+
