@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = 'MZExtension'
-s.version = '2.0.0'
+s.version = '2.0.1'
 s.license = 'MIT'
 s.summary = 'Some categorys and custom objects for iOS.'
 s.homepage = 'https://github.com/1691665955/MZExtension'
@@ -19,8 +19,44 @@ s.subspec 'Category' do |ss|
 end
 
 s.subspec 'Extends' do |ss|
-  ss.source_files = 'MZExtension/Extends/**/*.{h,m}'
-  ss.dependency 'SDWebImage', '~>4.2.2'
+  # ss.source_files = 'MZExtension/Extends/**/*.{h,m}'
+  # ss.dependency 'SDWebImage', '~>4.2.2'
+  ss.subspec 'MZBannerView' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZBannerView/*.{h,m}'
+  	sss.dependency 'SDWebImage', '~>4.2.2'
+  end
+
+  ss.subspec 'MZImageBrowsing' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZImageBrowsing/*.{h,m}'
+  end
+
+  ss.subspec 'MZCircleProgress' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZCircleProgress/*.{h,m}'
+  end
+
+  ss.subspec 'MZMarqueeLabel' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZMarqueeLabel/*.{h,m}'
+  end
+
+  ss.subspec 'MZMobileField' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZMobileField/*.{h,m}'
+  end
+
+  ss.subspec 'MZTableView' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZTableView/*.{h,m}'
+  end
+
+  ss.subspec 'MZTextField' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZTextField/*.{h,m}'
+  end
+
+  ss.subspec 'MZTextView' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZTextView/*.{h,m}'
+  end
+
+  ss.subspec 'MZWaveView' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZWaveView/*.{h,m}'
+  end
 end
 
 end
