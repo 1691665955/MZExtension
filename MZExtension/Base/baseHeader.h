@@ -15,6 +15,7 @@
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
 
 //适配iPhoneX
+#define iphoneX      [UIScreen mainScreen].bounds.size.height >= 812.0
 #define Navi_Height  ([UIScreen mainScreen].bounds.size.height >= 812.0?88:64)
 #define StateBar_Height ([UIScreen mainScreen].bounds.size.height >= 812.0?44:20)
 #define Tabbar_Height ([UIScreen mainScreen].bounds.size.height >= 812.0?83:49)

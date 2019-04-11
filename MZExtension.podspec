@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = 'MZExtension'
-s.version = '2.0.2'
+s.version = '2.0.3'
 s.license = 'MIT'
 s.summary = 'Some categorys and custom objects for iOS.'
 s.homepage = 'https://github.com/1691665955/MZExtension'
@@ -19,8 +19,6 @@ s.subspec 'Category' do |ss|
 end
 
 s.subspec 'Extends' do |ss|
-  # ss.source_files = 'MZExtension/Extends/**/*.{h,m}'
-  # ss.dependency 'SDWebImage', '~>4.2.2'
   ss.subspec 'MZBannerView' do |sss|
   	sss.source_files = 'MZExtension/Extends/MZBannerView/*.{h,m}'
   	sss.dependency 'SDWebImage', '~>4.2.2'
@@ -56,6 +54,10 @@ s.subspec 'Extends' do |ss|
 
   ss.subspec 'MZWaveView' do |sss|
   	sss.source_files = 'MZExtension/Extends/MZWaveView/*.{h,m}'
+  end
+
+  ss.subspec 'MZAlertController' do |sss|
+  	sss.source_files = 'MZExtension/Extends/MZAlertController/*.{h,m}'
   end
 end
 

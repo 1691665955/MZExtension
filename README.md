@@ -31,6 +31,8 @@ A extension for OC
 ###
 9、MZImageBrowsing（图片浏览器）
 
+###
+10、MZAlertController（半透明控制器，类似UIAlertController功能）
 
 ##
 自定义类别
@@ -143,3 +145,7 @@ A extension for OC
 1.获取数组中的最大值数组
 - (void)caculateMaxArray:(void(^)(NSArray *maxArray,NSInteger startIndex,NSInteger endIndex))callback;
 
+11、UIColor+MZTool
+
+1.获取图片上某个点的颜色
++ (UIColor *)colorAtPixel:(CGPoint)point withImage:(UIImage *)image;
