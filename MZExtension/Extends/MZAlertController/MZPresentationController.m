@@ -41,8 +41,8 @@
 }
 
 - (CGRect)frameOfPresentedViewInContainerView {
-    MZActionSheetController *alert = (MZActionSheetController *)self.presentedViewController;
-    self.presentedView.frame = CGRectMake(0, MZPresentationController_Height-alert.Height, SCREEN_WIDTH, alert.Height);
+    MZActionSheetController *actionSheet = (MZActionSheetController *)self.presentedViewController;
+    self.presentedView.frame = CGRectMake(0, MZPresentationController_Height-actionSheet.Height, MZPresentationController_WIDTH, actionSheet.Height);
     return self.presentedView.frame;
 }
 @end
