@@ -7,9 +7,9 @@
 //
 
 #import "MZActionSheetController.h"
-#import "MZPresentationController.h"
+#import "MZActionSheetDelegate.h"
 @interface MZActionSheetController ()<UIViewControllerTransitioningDelegate>
-
+@property (nonatomic, strong) MZActionSheetDelegate *mzDelegate;
 @end
 
 @implementation MZActionSheetController
@@ -22,8 +22,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.mzDelegate = [[MZActionSheetDelegate alloc] init];
         self.modalPresentationStyle = UIModalPresentationCustom;
-        self.transitioningDelegate = self;
+        self.transitioningDelegate = self.mzDelegate;
     }
     return self;
 }
@@ -31,8 +32,9 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
+        self.mzDelegate = [[MZActionSheetDelegate alloc] init];
         self.modalPresentationStyle = UIModalPresentationCustom;
-        self.transitioningDelegate = self;
+        self.transitioningDelegate = self.mzDelegate;
     }
     return self;
 }
@@ -40,16 +42,10 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.mzDelegate = [[MZActionSheetDelegate alloc] init];
         self.modalPresentationStyle = UIModalPresentationCustom;
-        self.transitioningDelegate = self;
+        self.transitioningDelegate = self.mzDelegate;
     }
     return self;
 }
-
-#pragma mark -UIViewControllerTransitioningDelegate
-- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source {
-    return [[MZPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
-}
-
-
 @end

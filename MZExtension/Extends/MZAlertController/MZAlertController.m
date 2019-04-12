@@ -20,10 +20,10 @@
     
     UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *visualView = [[UIVisualEffectView alloc] initWithEffect:blur];
-    visualView.frame = self.view.bounds;
+    visualView.frame = UIScreen.mainScreen.bounds;
     visualView.alpha = 0.4;
     visualView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:visualView];
+    [self.view insertSubview:visualView atIndex:0];
 }
 
 // 控制器弹出方式
