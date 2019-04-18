@@ -20,6 +20,14 @@ NS_ASSUME_NONNULL_BEGIN
  @return 颜色
  */
 + (UIColor *)colorAtPixel:(CGPoint)point withImage:(UIImage *)image;
+
+/**
+ 根据16进制字符串获取颜色
+ 
+ @param hexString 16进制字符串
+ @return 颜色
+ */
++ (UIColor *)colorWithHexString:(NSString *)hexString;
 @end
 
 NS_ASSUME_NONNULL_END

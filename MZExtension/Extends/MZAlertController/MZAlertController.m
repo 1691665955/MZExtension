@@ -33,7 +33,7 @@
 
 // 设置控制器透明
 - (UIModalPresentationStyle)modalPresentationStyle {
-    return UIModalPresentationOverCurrentContext;
+    return UIModalPresentationOverFullScreen;
 }
 
 @end

@@ -34,6 +34,9 @@ A extension for OC
 ###
 10、MZAlertController（半透明控制器，类似UIAlertController功能）
 
+###
+11、MZDrawBoardView（CAShapeLayer实现画板功能,可在画板上写字绘画）
+
 ##
 自定义类别
 
@@ -149,3 +152,5 @@ A extension for OC
 
 1.获取图片上某个点的颜色
 + (UIColor *)colorAtPixel:(CGPoint)point withImage:(UIImage *)image;
+2.根据16进制字符串获取颜色
++ (UIColor *)colorWithHexString:(NSString *)hexString;
