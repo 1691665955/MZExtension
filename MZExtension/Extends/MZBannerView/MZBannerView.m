@@ -24,23 +24,35 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.autoScroll = YES;
-        
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        self.scrollView.showsVerticalScrollIndicator = NO;
-        self.scrollView.showsHorizontalScrollIndicator = NO;
-        self.scrollView.pagingEnabled = YES;
-        self.scrollView.delegate = self;
-        self.scrollView.bounces = YES;
-        [self addSubview:self.scrollView];
-        
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((frame.size.width-100)/2, frame.size.height-25, 100,15)];
-        self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-        self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:90/255.0 green:160/255.0 blue:245/255.0 alpha:1];
-        self.pageControl.hidesForSinglePage = YES;
-        [self addSubview:self.pageControl];
+        [self setup];
     }
     return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup {
+    self.autoScroll = YES;
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.delegate = self;
+    self.scrollView.bounces = YES;
+    [self addSubview:self.scrollView];
+    
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.frame.size.width-100)/2, self.frame.size.height-25, 100,15)];
+    self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+    self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:90/255.0 green:160/255.0 blue:245/255.0 alpha:1];
+    self.pageControl.hidesForSinglePage = YES;
+    [self addSubview:self.pageControl];
 }
 
 - (void)setDelegate:(id<MZBannerViewDelegate>)delegate {
