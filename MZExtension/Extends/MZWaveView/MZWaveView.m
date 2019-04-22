@@ -39,6 +39,16 @@
     return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self configWaveProperties];
+        [self createWaves];
+        [self setupDisplayLink];
+    }
+    return self;
+}
+
 //给参数赋初值
 - (void)configWaveProperties {
     _frontColor = [UIColor blackColor];
