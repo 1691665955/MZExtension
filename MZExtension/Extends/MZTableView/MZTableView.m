@@ -43,6 +43,16 @@
     [self addSubview:self.contentView];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.contentView.frame = self.bounds;
+    for (UIView *cell in self.contentView.subviews) {
+        CGRect frame = cell.frame;
+        frame.size.height = self.bounds.size.height;
+        cell.frame = frame;
+    }
+}
+
 - (NSMutableDictionary *)registerDictionary {
     if (!_registerDictionary) {
         _registerDictionary = [NSMutableDictionary dictionary];
@@ -158,7 +168,7 @@
             }
         }
     }
-    self.contentView.contentSize = CGSizeMake(width, self.frame.size.height);
+    self.contentView.contentSize = CGSizeMake(width, 0);
     NSLog(@"cell对象个数:%ld",self.visibleCellArray.count+self.unVisibleCellArray.count);
 }
 
