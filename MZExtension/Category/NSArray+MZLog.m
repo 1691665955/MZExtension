@@ -7,6 +7,7 @@
 //
 
 #import "NSArray+MZLog.h"
+#import <objc/runtime.h>
 
 @implementation NSArray (MZLog)
 + (void)load {

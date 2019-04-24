@@ -7,6 +7,7 @@
 //
 
 #import "NSDictionary+MZLog.h"
+#import <objc/runtime.h>
 
 @implementation NSDictionary (MZLog)
 
