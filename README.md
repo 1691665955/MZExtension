@@ -74,6 +74,10 @@ A extension for OC
 - +(UIImage *)clipsImage:(UIImage *)image frame:(CGRect)frame;
 8. 新生成指定大小图片
 - +(UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)size;
+9. 生成圆形图片
+- +(UIImage *)cutCircleImage:(UIImage *)image;
+10. 生成部分圆角图片
+- +(UIImage *)cutPartCircleImage:(UIImage *)image corners:(UIRectCorner)corners radii:(CGSize)radii;
 
 3、UIView+MZTool
 
@@ -81,6 +85,12 @@ A extension for OC
 - -(void)setupGradientColorWithStartColor:(UIColor *)startColor endColor:(UIColor *)endColor startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
 2. 给view添加点击事件
 - -(void)addTapGestureRecognizerWithTarget:(id)target selector:(SEL)selector;
+3. 根据一个VC上的view得到该VC
+- -(UIViewController *)getVC;
+4. 设置试图圆角
+- -(void)setRadius:(CGFloat)radius;
+5. 设置部分圆角
+- -(void)setRoundedCorners:(UIRectCorner)corners radii:(CGSize)radii;
 
 4、NSObject+MZTool
 
@@ -88,6 +98,18 @@ A extension for OC
 - +(UIViewController *)currentViewController;
 2. 获取屏幕窗口
 - +(UIView *)getWindowView;
+3. 获取手机当前连接的SSID（iOS12后要开启capabilities中的Access WiFi Information）
+- +(NSString *)SSID;
+4. 获取app版本号
+- +(NSString *)getAppVersion;
+5. 获取app Build
+- +(NSString *)getAppBuild;
+6. 获取app名称
+- +(NSString *)getAppName;
+7. 获取app BundleID
+- +(NSString *)getAppBundleIdentifier;
+8. 获取app Icon
+- +(UIImage *)getAppIcon;
 
 5、NSString+MZTool
 

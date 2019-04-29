@@ -47,4 +47,36 @@
     }
     return nil;
 }
+
+/**
+ 设置试图圆角
+ 
+ @param radius 圆角大小
+ */
+- (void)setRadius:(CGFloat)radius {
+    self.layer.cornerRadius = radius;
+    self.layer.masksToBounds = YES;
+}
+
+/**
+ 设置部分圆角
+ 
+ @param corners 圆角方向
+ @param radii 圆角大小
+ */
+- (void)setRoundedCorners:(UIRectCorner)corners radii:(CGSize)radii {
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:corners cornerRadii:radii];
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.path = path.CGPath;
+    shapeLayer.frame = self.bounds;
+    
+    CAShapeLayer *borderLayer = [CAShapeLayer layer];
+    borderLayer.path = path.CGPath;
+    borderLayer.fillColor = [UIColor clearColor].CGColor;
+    borderLayer.strokeColor = self.layer.borderColor?self.layer.borderColor:[[UIColor clearColor] CGColor];
+    borderLayer.lineWidth = self.layer.borderWidth;
+    borderLayer.frame = self.bounds;
+    self.layer.mask = shapeLayer;
+    [self.layer addSublayer:borderLayer];
+}
 @end
