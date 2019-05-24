@@ -37,9 +37,6 @@ A extension for OC
 ###
 11、MZDrawBoardView（CAShapeLayer实现画板功能,可在画板上写字绘画）
 
-###
-12、MZNotification（参考[简书](https://www.jianshu.com/p/caec9cd0bc9d)链接）
-
 ##
 自定义类别
 

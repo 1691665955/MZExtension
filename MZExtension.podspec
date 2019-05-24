@@ -64,9 +64,6 @@ s.subspec 'Extends' do |ss|
     sss.source_files = 'MZExtension/Extends/MZDrawBoardView/*.{h,m}'
   end
 
-  ss.subspec 'MZNotification' do |sss|
-    sss.source_files = 'MZExtension/Extends/MZNotification/*.{h,m}'
-  end
 end
 
 end
