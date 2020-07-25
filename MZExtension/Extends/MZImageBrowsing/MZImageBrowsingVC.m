@@ -8,6 +8,7 @@
 
 #import "MZImageBrowsingVC.h"
 #import "MZPresentAnimationTransitioning.h"
+#import <UIImageView+WebCache.h>
 
 #define SCREEN_WIDTH_1     [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT_1    [UIScreen mainScreen].bounds.size.height
