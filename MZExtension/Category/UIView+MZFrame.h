@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat mz_height;
 @property (nonatomic, assign) CGFloat mz_centerX;
 @property (nonatomic, assign) CGFloat mz_centerY;
+@property (nonatomic, assign, readonly) CGFloat mz_maxX;
+@property (nonatomic, assign, readonly) CGFloat mz_maxY;
 @end
 
 NS_ASSUME_NONNULL_END

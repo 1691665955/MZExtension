@@ -9,7 +9,7 @@
 #import "UIButton+MZTouch.h"
 #import<objc/runtime.h>
 
-#define defaultInterval  1.0f
+#define defaultInterval  0.2f
 
 @implementation UIButton (MZTouch)
 static const char *UIControl_eventTimeInterval = "UIControl_eventTimeInterval";

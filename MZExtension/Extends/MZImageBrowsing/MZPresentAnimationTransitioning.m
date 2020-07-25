@@ -50,8 +50,10 @@
 //实现present动画过渡
 - (void)presentAnimation:(id<UIViewControllerContextTransitioning>)transitionContext {
     MZImageBrowsingVC *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    UIViewController *fromVC = [[[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey] childViewControllers] lastObject];
-    
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    if ([fromVC isKindOfClass:[UINavigationController class]]) {
+        fromVC = [[(UINavigationController *)fromVC viewControllers] lastObject];
+    }
     UIView *containerView = [transitionContext containerView];
     containerView.backgroundColor = [UIColor blackColor];
     UIImageView *tempImageView = [UIImageView new];
@@ -61,7 +63,7 @@
     tempImageView.clipsToBounds = YES;
     [containerView addSubview:toVC.view];
     [containerView addSubview:tempImageView];
-    tempImageView.frame = [toVC.currentImageView convertRect:toVC.currentImageView.bounds toView:fromVC.view];
+    tempImageView.frame = [self getViewFrameInScrren:toVC.currentImageView toVC:toVC];
     fromVC.view.hidden = YES;
     toVC.view.hidden = YES;
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
@@ -96,7 +98,7 @@
     fromVC.currentImageView.hidden = YES;
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-        tempImageView.frame = [fromVC.currentImageView convertRect:fromVC.currentImageView.bounds toView:fromVC.view];
+        tempImageView.frame = [self getViewFrameInScrren:fromVC.currentImageView toVC:fromVC];
         fromVC.view.alpha = 0;
     } completion:^(BOOL finished) {
         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
@@ -105,6 +107,45 @@
             fromVC.currentImageView.hidden = NO;
         }
     }];
+}
+
+- (CGRect)getViewFrameInScrren:(UIView *)view toVC:(MZImageBrowsingVC *)toVC {
+    CGPoint position = [self getViewPositionInScreen:view toVC:toVC];
+    return CGRectMake(position.x, position.y, view.frame.size.width, view.frame.size.height);
+}
+
+- (CGPoint)getViewPositionInScreen:(UIView *)view toVC:(MZImageBrowsingVC *)toVC {
+    UIView *superView = [view superview];
+    if (superView) {
+        if ([superView isKindOfClass:NSClassFromString(@"UITableViewCellContentView")]) {
+            CGPoint position = view.frame.origin;
+            CGPoint superPosition = [self getViewPositionInScreen:superView.superview toVC:(MZImageBrowsingVC *)toVC];
+            return CGPointMake(position.x+superPosition.x, position.y+superPosition.y);
+        } else if ([superView isKindOfClass:[UITableView class]]) {
+            UITableView *tableView = (UITableView *)superView;
+            CGPoint position = [tableView rectForRowAtIndexPath:toVC.indexPath].origin;
+            CGPoint superPosition = [self getViewPositionInScreen:superView toVC:(MZImageBrowsingVC *)toVC];
+            return CGPointMake(position.x+superPosition.x, position.y+superPosition.y-tableView.contentOffset.y);
+        } else if ([superView isKindOfClass:[UICollectionView class]]) {
+            UICollectionView *collectionView = (UICollectionView *)superView;
+            UICollectionViewLayoutAttributes *att = [collectionView layoutAttributesForItemAtIndexPath:toVC.indexPath];
+            CGRect cellRect = att.frame;
+            CGPoint position = [collectionView convertRect:cellRect toView:collectionView].origin;
+            CGPoint superPosition = [self getViewPositionInScreen:superView toVC:(MZImageBrowsingVC *)toVC];
+            return CGPointMake(position.x+superPosition.x, position.y+superPosition.y-collectionView.contentOffset.y);
+        } else if ([superView isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollView = (UIScrollView *)superView;
+            CGPoint position = view.frame.origin;
+            CGPoint superPosition = [self getViewPositionInScreen:superView toVC:(MZImageBrowsingVC *)toVC];
+            return CGPointMake(position.x+superPosition.x-scrollView.contentOffset.x, position.y+superPosition.y-scrollView.contentOffset.y);
+        } else {
+            CGPoint position = view.frame.origin;
+            CGPoint superPosition = [self getViewPositionInScreen:superView toVC:(MZImageBrowsingVC *)toVC];
+            return CGPointMake(position.x+superPosition.x, position.y+superPosition.y);
+        }
+    } else {
+        return view.frame.origin;
+    }
 }
 
 @end

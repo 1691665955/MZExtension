@@ -18,6 +18,7 @@
 @property (strong, nonatomic) UIScrollView *imageScrollView;
 @property (strong, nonatomic) UIImageView *showImageView;
 @property (strong, nonatomic) UIImageView *currentImageView;
+@property (strong, nonatomic) NSArray *imageUrlArray;
 @end
 
 @implementation MZImageBrowsingVC
@@ -41,6 +42,16 @@
     return self;
 }
 
+- (instancetype)initWithImageUrlArray:(NSArray<NSString *> *)imageUrlArray currentImageView:(UIImageView *)currentImageView currentIndex:(NSInteger)currentIndex {
+    self = [self init];
+    if (self) {
+        self.imageUrlArray = imageUrlArray;
+        self.currentIndex = currentIndex;
+        self.currentImageView = currentImageView;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -57,8 +68,9 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    for (int i = 0; i < self.imageViewArray.count; i++) {
+    for (int i = 0; i < (self.imageViewArray?self.imageViewArray.count:self.imageUrlArray.count); i++) {
         UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH_1+20)*i, 0, SCREEN_WIDTH_1, SCREEN_HEIGHT_1)];
+        scrollView.tag = 100+i;
         scrollView.contentSize = CGSizeMake(SCREEN_WIDTH_1, SCREEN_HEIGHT_1);
         [self.imageScrollView addSubview:scrollView];
         if (@available(iOS 11.0, *)) {
@@ -72,26 +84,52 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(back)];
         [containerView addGestureRecognizer:tap];
         
-        UIImageView *tempImageView = self.imageViewArray[i];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1*tempImageView.image.size.height/tempImageView.image.size.width)];
-        if (CGRectGetHeight(imageView.frame) <= SCREEN_HEIGHT_1) {
-            imageView.center = CGPointMake(SCREEN_WIDTH_1/2, SCREEN_HEIGHT_1/2);
-            scrollView.contentSize = CGSizeMake(SCREEN_WIDTH_1, SCREEN_HEIGHT_1);
+        if (self.imageViewArray) {
+            UIImageView *tempImageView = self.imageViewArray[i];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1*tempImageView.image.size.height/tempImageView.image.size.width)];
+            if (CGRectGetHeight(imageView.frame) <= SCREEN_HEIGHT_1) {
+                imageView.center = CGPointMake(SCREEN_WIDTH_1/2, SCREEN_HEIGHT_1/2);
+                scrollView.contentSize = CGSizeMake(SCREEN_WIDTH_1, SCREEN_HEIGHT_1);
+            } else {
+                CGRect frame = containerView.frame;
+                frame.size.height = CGRectGetHeight(imageView.frame);
+                containerView.frame = frame;
+                scrollView.contentSize = CGSizeMake(SCREEN_WIDTH_1, CGRectGetHeight(imageView.frame));
+            }
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = YES;
+            imageView.image = tempImageView.image;
+            [containerView addSubview:imageView];
+            
+            if (i == self.currentIndex) {
+                self.showImageView.image = tempImageView.image;
+                [self.showImageView setFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1*tempImageView.image.size.height/tempImageView.image.size.width)];
+                self.showImageView.center = self.view.center;
+            }
         } else {
-            CGRect frame = containerView.frame;
-            frame.size.height = CGRectGetHeight(imageView.frame);
-            containerView.frame = frame;
-             scrollView.contentSize = CGSizeMake(SCREEN_WIDTH_1, CGRectGetHeight(imageView.frame));
-        }
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.clipsToBounds = YES;
-        imageView.image = tempImageView.image;
-        [containerView addSubview:imageView];
-        
-        if (i == self.currentIndex) {
-            self.showImageView.image = tempImageView.image;
-            [self.showImageView setFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1*tempImageView.image.size.height/tempImageView.image.size.width)];
-            self.showImageView.center = self.view.center;
+            NSString *url = self.imageUrlArray[i];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_HEIGHT_1)];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.clipsToBounds = YES;
+            [imageView sd_setImageWithURL:[NSURL URLWithString:url] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                imageView.frame = CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1*image.size.height/image.size.width);
+                if (CGRectGetHeight(imageView.frame) <= SCREEN_HEIGHT_1) {
+                    imageView.center = CGPointMake(SCREEN_WIDTH_1/2, SCREEN_HEIGHT_1/2);
+                    scrollView.contentSize = CGSizeMake(SCREEN_WIDTH_1, SCREEN_HEIGHT_1);
+                } else {
+                    CGRect frame = containerView.frame;
+                    frame.size.height = CGRectGetHeight(imageView.frame);
+                    containerView.frame = frame;
+                    scrollView.contentSize = CGSizeMake(SCREEN_WIDTH_1, CGRectGetHeight(imageView.frame));
+                }
+            }];
+            [containerView addSubview:imageView];
+            
+            if (i == self.currentIndex) {
+                self.showImageView.image = self.currentImageView.image;
+                [self.showImageView setFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1*self.currentImageView.image.size.height/self.currentImageView.image.size.width)];
+                self.showImageView.center = self.view.center;
+            }
         }
     }
     
@@ -115,7 +153,7 @@
     _imageScrollView.delaysContentTouches = YES;
     _imageScrollView.canCancelContentTouches = NO;
     _imageScrollView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:1];
-    _imageScrollView.contentSize = CGSizeMake((20 + SCREEN_WIDTH_1) * self.imageViewArray.count, SCREEN_HEIGHT_1);
+    _imageScrollView.contentSize = CGSizeMake((20 + SCREEN_WIDTH_1) * (self.imageViewArray?self.imageViewArray.count:self.imageUrlArray.count), SCREEN_HEIGHT_1);
     _imageScrollView.pagingEnabled = YES;
     _imageScrollView.directionalLockEnabled = YES;
     return _imageScrollView;
@@ -133,11 +171,18 @@
 #pragma mark -UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.currentIndex = scrollView.contentOffset.x/(SCREEN_WIDTH_1 + 20);
-    UIImageView *tempImageView = self.imageViewArray[self.currentIndex];
-    self.currentImageView = tempImageView;
-    self.showImageView.image = tempImageView.image;
-    [self.showImageView setFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1 * tempImageView.image.size.height / tempImageView.image.size.width)];
-    self.showImageView.center = self.view.center;
+    if (self.imageViewArray) {
+        UIImageView *tempImageView = self.imageViewArray[self.currentIndex];
+        self.currentImageView = tempImageView;
+        self.showImageView.image = tempImageView.image;
+        [self.showImageView setFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1 * tempImageView.image.size.height / tempImageView.image.size.width)];
+        self.showImageView.center = self.view.center;
+    } else {
+        UIImageView *tempImageView = [[[[[scrollView viewWithTag:100+self.currentIndex] subviews] firstObject] subviews] firstObject];
+        self.showImageView.image = tempImageView.image;
+        [self.showImageView setFrame:CGRectMake(0, 0, SCREEN_WIDTH_1, SCREEN_WIDTH_1 * tempImageView.image.size.height / tempImageView.image.size.width)];
+        self.showImageView.center = self.view.center;
+    }
 }
 
 - (UIImageView *)showImageView {
@@ -152,13 +197,30 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    UIView *statusBar = [[UIApplication sharedApplication] valueForKey:@"statusBar"];
+    UIView *statusBar = [self getStatusBar];
     statusBar.alpha = 0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    UIView *statusBar = [[UIApplication sharedApplication] valueForKey:@"statusBar"];
+    UIView *statusBar = [self getStatusBar];
     statusBar.alpha = 1;
 }
+
+- (UIView *)getStatusBar {
+    UIView *statusBar;
+    if (@available(iOS 13.0, *)) {
+        UIStatusBarManager *statusBarManager = [[[UIApplication sharedApplication] windows] objectAtIndex:0].windowScene.statusBarManager;
+        if ([statusBarManager respondsToSelector:@selector(createLocalStatusBar)]) {
+            UIView *_localStatusBar = [statusBarManager performSelector:@selector(createLocalStatusBar)];
+            if ([_localStatusBar respondsToSelector:@selector(statusBar)]) {
+                statusBar = [_localStatusBar performSelector:@selector(statusBar)];
+            }
+        }
+    } else {
+        statusBar = [[UIApplication sharedApplication] valueForKey:@"statusBar"];
+    }
+    return statusBar;
+}
+
 @end

@@ -128,4 +128,15 @@
     center.y = mz_centerY;
     self.center = center;
 }
+
+/// 获取试图的maxX
+- (CGFloat)mz_maxX {
+    return CGRectGetMaxX(self.frame);
+}
+
+/// 获取试图的maxyY
+- (CGFloat)mz_maxY {
+    return CGRectGetMaxY(self.frame);
+}
+
 @end

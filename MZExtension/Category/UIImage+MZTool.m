@@ -169,16 +169,9 @@
  @param frame 截取的范围
  */
 + (UIImage *)clipsImage:(UIImage *)image frame:(CGRect)frame {
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGFloat x = frame.origin.x*scale;
-    CGFloat y = frame.origin.y*scale;
-    CGFloat w = frame.size.width*scale;
-    CGFloat h = frame.size.height*scale;
-    CGRect newFrame = CGRectMake(x, y, w, h);
-    
     CGImageRef sourceImageRef = [image CGImage];
-    CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, newFrame);
-    UIImage *newImage = [UIImage imageWithCGImage:newImageRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+    CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, frame);
+    UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
     return newImage;
 }
 

@@ -156,30 +156,23 @@ A extension for OC
 6. 获取当前时间戳
 - +(NSTimeInterval)getNowTimeInterval;
 
-8、UIButton+MZTool
-
-1. 设置不同状态下的背景颜色
-- -(void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state;
-2. 添加点击事件
-- -(void)setClickedBlock:(void(^)(UIButton *sender))clickedBlock;
-
-9、UIButton+MZTouch
+8、UIButton+MZTouch
 
 1. 通过eventTimeInterval来设置UIButton点击间隔
 
-10、NSArray+MZTool
+9、NSArray+MZTool
 
 1. 获取数组中的最大值数组
 - -(void)caculateMaxArray:(void(^)(NSArray *maxArray,NSInteger startIndex,NSInteger endIndex))callback;
 
-11、UIColor+MZTool
+10、UIColor+MZTool
 
 1. 获取图片上某个点的颜色
 - +(UIColor *)colorAtPixel:(CGPoint)point withImage:(UIImage *)image;
 2. 根据16进制字符串获取颜色
 - +(UIColor *)colorWithHexString:(NSString *)hexString;
 
-12、UIView+MZFrame
+11、UIView+MZFrame
 
 - @property (nonatomic, assign) CGFloat mz_x;
 - @property (nonatomic, assign) CGFloat mz_y;

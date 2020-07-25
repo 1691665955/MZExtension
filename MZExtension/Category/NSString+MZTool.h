@@ -40,4 +40,5 @@
  @return 转换为大端Unsigned数据
  */
 +(unsigned short)unsignedDataTointWithData:(NSData *)data Location:(NSInteger)location Offset:(NSInteger)offset;
+
 @end
