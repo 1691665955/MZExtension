@@ -28,6 +28,15 @@ NS_ASSUME_NONNULL_BEGIN
  @return 颜色
  */
 + (UIColor *)colorWithHexString:(NSString *)hexString;
+
+/**
+ 根据16进制字符串获取颜色
+ 
+ @param hexString 16进制字符串
+ @param alpha 透明度
+ @return 颜色
+ */
++ (UIColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha;
 @end
 
 NS_ASSUME_NONNULL_END

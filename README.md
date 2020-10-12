@@ -78,6 +78,8 @@ A extension for OC
 - +(UIImage *)cutCircleImage:(UIImage *)image;
 10. 生成部分圆角图片
 - +(UIImage *)cutPartCircleImage:(UIImage *)image corners:(UIRectCorner)corners radii:(CGSize)radii;
+11. 处理图片旋转问题
+- +(UIImage *)fixOrientation:(UIImage *)aImage;
 
 3、UIView+MZTool
 

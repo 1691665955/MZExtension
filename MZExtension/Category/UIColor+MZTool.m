@@ -80,6 +80,17 @@
  @return 颜色
  */
 + (UIColor *)colorWithHexString:(NSString *)hexString {
+    return [self colorWithHexString:hexString alpha:1.0f];
+}
+
+/**
+ 根据16进制字符串获取颜色
+ 
+ @param hexString 16进制字符串
+ @param alpha 透明度
+ @return 颜色
+ */
++ (UIColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha {
     NSString *cString = [[hexString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
     
     //hexString应该6到8个字符
@@ -119,7 +130,7 @@
     [[NSScanner scannerWithString:gString] scanHexInt:&g];
     [[NSScanner scannerWithString:bString] scanHexInt:&b];
     
-    return [UIColor colorWithRed:((float) r / 255.0f) green:((float) g / 255.0f) blue:((float) b / 255.0f) alpha:1.0f];
+    return [UIColor colorWithRed:((float) r / 255.0f) green:((float) g / 255.0f) blue:((float) b / 255.0f) alpha:alpha];
 }
 
 @end

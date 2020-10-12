@@ -126,4 +126,16 @@
     return icon;
 }
 
+/**
+ 呼叫电话
+ */
++ (void)callPhone:(NSString *)phone {
+    if (@available(iOS 10.0, *)) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",phone]] options:@{}completionHandler:^(BOOL success) {
+        }];
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"telprompt://%@",phone]]];
+    }
+}
+
 @end

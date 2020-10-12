@@ -50,4 +50,9 @@
  获取app Icon
  */
 + (UIImage *)getAppIcon;
+
+/**
+ 呼叫电话
+ */
++ (void)callPhone:(NSString *)phone;
 @end

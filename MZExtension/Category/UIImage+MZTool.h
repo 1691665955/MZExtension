@@ -84,4 +84,11 @@
  @param radii 圆角大小
  */
 + (UIImage *)cutPartCircleImage:(UIImage *)image corners:(UIRectCorner)corners radii:(CGSize)radii;
+
+/**
+ 处理图片旋转问题
+ 
+ @param aImage 原图片
+ */
++ (UIImage *)fixOrientation:(UIImage *)aImage;
 @end

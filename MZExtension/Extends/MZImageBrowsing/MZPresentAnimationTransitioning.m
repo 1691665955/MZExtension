@@ -123,9 +123,15 @@
             return CGPointMake(position.x+superPosition.x, position.y+superPosition.y);
         } else if ([superView isKindOfClass:[UITableView class]]) {
             UITableView *tableView = (UITableView *)superView;
-            CGPoint position = [tableView rectForRowAtIndexPath:toVC.indexPath].origin;
-            CGPoint superPosition = [self getViewPositionInScreen:superView toVC:(MZImageBrowsingVC *)toVC];
-            return CGPointMake(position.x+superPosition.x, position.y+superPosition.y-tableView.contentOffset.y);
+            if ([view isMemberOfClass:[UIView class]]) {
+                CGPoint position = view.frame.origin;
+                CGPoint superPosition = [self getViewPositionInScreen:superView toVC:(MZImageBrowsingVC *)toVC];
+                return CGPointMake(position.x+superPosition.x-tableView.contentOffset.x, position.y+superPosition.y-tableView.contentOffset.y);
+            } else {
+                CGPoint position = [tableView rectForRowAtIndexPath:toVC.indexPath].origin;
+                CGPoint superPosition = [self getViewPositionInScreen:superView toVC:(MZImageBrowsingVC *)toVC];
+                return CGPointMake(position.x+superPosition.x, position.y+superPosition.y-tableView.contentOffset.y);
+            }
         } else if ([superView isKindOfClass:[UICollectionView class]]) {
             UICollectionView *collectionView = (UICollectionView *)superView;
             UICollectionViewLayoutAttributes *att = [collectionView layoutAttributesForItemAtIndexPath:toVC.indexPath];
