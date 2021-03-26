@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = 'MZExtension'
-s.version = '2.1.7'
+s.version = '2.1.8'
 s.license = 'MIT'
 s.summary = 'Some categorys and custom objects for iOS.'
 s.homepage = 'https://github.com/1691665955/MZExtension'
@@ -16,6 +16,10 @@ end
 
 s.subspec 'Category' do |ss|
   ss.source_files = 'MZExtension/Category/*.{h,m}'
+end
+
+s.subspec 'Tool' do |ss|
+  ss.source_files = 'MZExtension/Tool/*.{h,m}'
 end
 
 s.subspec 'Extends' do |ss|
@@ -63,6 +67,10 @@ s.subspec 'Extends' do |ss|
 
   ss.subspec 'MZDrawBoardView' do |sss|
     sss.source_files = 'MZExtension/Extends/MZDrawBoardView/*.{h,m}'
+  end
+  
+  ss.subspec 'MZLongTapButton' do |sss|
+    sss.source_files = 'MZExtension/Extends/MZLongTapButton/*.{h,m}'
   end
 
 end
