@@ -37,6 +37,9 @@ A extension for OC
 ###
 11、MZDrawBoardView（CAShapeLayer实现画板功能,可在画板上写字绘画）
 
+###
+12、MZLongTapButton（长按按钮）
+
 ##
 自定义类别
 
@@ -182,3 +185,21 @@ A extension for OC
 - @property (nonatomic, assign) CGFloat mz_height;
 - @property (nonatomic, assign) CGFloat mz_centerX;
 - @property (nonatomic, assign) CGFloat mz_centerY;
+
+12、NSObject+MZAvoidCrash
+
+1. 统一处理找不到对应方法崩溃的问题
+2. 统一处理键值对编码找不到对应属性崩溃的问题
+
+13、NSArray+MZLog
+
+1. 统一处理数组打印的问题
+
+14、NSDictionary+MZLog
+
+1. 统一处理字典打印的问题
+
+15、NSArray+MZTool
+
+1. 获取数组中的最大值数组
+- - (void)caculateMaxArray:(void(^)(NSArray *maxArray,NSInteger startIndex,NSInteger endIndex))callback;

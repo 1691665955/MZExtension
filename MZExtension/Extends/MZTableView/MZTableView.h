@@ -34,4 +34,6 @@
 - (UIView *)dequeueReusableCellWithIdentifier:(NSString *)identifier;
 //刷新数据，本控件必须得刷新控件才会有数据
 - (void)reloadData;
+// 刷新数据，并滚动到最左边
+- (void)reloadDataAndScrollToLeft;
 @end

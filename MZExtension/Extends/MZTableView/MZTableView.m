@@ -146,30 +146,30 @@
 
 //重新加载数据
 - (void)reloadData {
-    [self.contentView setContentOffset:CGPointMake(0, 0)];
+    [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromSuperview];
+    }];
+    [self.unVisibleCellArray addObjectsFromArray:self.visibleCellArray];
+    [self.visibleCellArray removeAllObjects];
     
     CGFloat width = 0;
     for (NSInteger i = 0; i < [self.delegate numberOfColumnsInTableView:self]; i++) {
-        width += [self.delegate tableView:self widthForColumn:i];
-        if (width <= self.frame.size.width) {
+        if (width >= self.contentView.contentOffset.x-[self.delegate tableView:self widthForColumn:i] && width <= self.frame.size.width + self.contentView.contentOffset.x) {
             UIView *cell = [self.delegate tableView:self cellForColumn:i];
             [self setupTapGesture:cell];
-            cell.frame = CGRectMake(width-[self.delegate tableView:self widthForColumn:i], 0, [self.delegate tableView:self widthForColumn:i], self.frame.size.height);
+            cell.frame = CGRectMake(width, 0, [self.delegate tableView:self widthForColumn:i], self.frame.size.height);
             [self.contentView addSubview:cell];
             [self.visibleCellArray addObject:cell];
-            if (i < [self.delegate numberOfColumnsInTableView:self]-1) {
-                if (width+[self.delegate tableView:self widthForColumn:i+1] > self.frame.size.width) {
-                    UIView *cell = [self.delegate tableView:self cellForColumn:i+1];
-                    [self setupTapGesture:cell];
-                    cell.frame = CGRectMake(width, 0, [self.delegate tableView:self widthForColumn:i+1], self.frame.size.height);
-                    [self.contentView addSubview:cell];
-                    [self.visibleCellArray insertObject:cell atIndex:i+1];
-                }
-            }
         }
+        width += [self.delegate tableView:self widthForColumn:i];
     }
     self.contentView.contentSize = CGSizeMake(width, 0);
-    NSLog(@"cell对象个数:%ld",self.visibleCellArray.count+self.unVisibleCellArray.count);
+}
+
+// 刷新数据，并滚动到最左边
+- (void)reloadDataAndScrollToLeft {
+    [self.contentView setContentOffset:CGPointMake(0, 0)];
+    [self reloadData];
 }
 
 - (void)setupTapGesture:(UIView *)cell {
@@ -254,7 +254,6 @@
             }
         }
     }
-    NSLog(@"cell对象个数:%ld",self.visibleCellArray.count+self.unVisibleCellArray.count);
 }
 
 //根据scrollview的偏移量来获取屏幕最左边显示的是第几列
