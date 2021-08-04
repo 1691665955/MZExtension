@@ -17,9 +17,9 @@
 //适配iPhoneX
 #define iphoneX      [UIScreen mainScreen].bounds.size.height >= 812.0
 #define StatusBar_Height [UIApplication sharedApplication].statusBarFrame.size.height
-#define Navi_Height  [UINavigationController new].navigationBar.frame.size.height + StatusBar_Height
+#define Navi_Height  ([UINavigationController new].navigationBar.frame.size.height + StatusBar_Height)
 #define Safe_Bottom  (iphoneX?34.0:0.0)
-#define Tabbar_Height [UITabBarController new].tabBar.frame.size.height + Safe_Bottom
+#define Tabbar_Height ([UITabBarController new].tabBar.frame.size.height + Safe_Bottom)
 
 // 弱引用
 #define WeakSelf(type)       __weak typeof(type) weak##type = type;
